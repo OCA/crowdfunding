@@ -8,11 +8,16 @@ class TestCrowdfundingFrontend(odoo.tests.HttpCase):
         """
         Test pledging for a challenge without being logged in
         """
-        self.skipTest("Skip tour tests until weird CI issue is solved")
         challenge = self.env.ref("crowdfunding.demo_challenge")
-        self.start_tour("/", "crowdfunding_frontend")
-        self.assertEqual(challenge.pledged_amount_unpaid, 4242)
+        self.start_tour("/", "crowdfunding_frontend_us")
+        self.assertEqual(challenge.pledged_amount, 4242)
         self.assertEqual(
             challenge.invoice_ids.partner_id.name,
             "Firstname Lastname",
         )
+
+    def test_pledge_not_logged_in_nl(self):
+        """
+        Test filling in NL-specific values for the partner form
+        """
+        self.start_tour("/", "crowdfunding_frontend_nl")

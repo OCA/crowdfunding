@@ -3,13 +3,8 @@ odoo.define("crowdfunding.tours.crowdfunding_frontend", function (require) {
 
     const tour = require("web_tour.tour");
 
-    tour.register(
-        "crowdfunding_frontend",
-        {
-            test: true,
-            url: "/crowdfunding",
-        },
-        [
+    function crowdfunding_frontend_steps(values) {
+        return [
             {
                 content: "Select the first challenge",
                 trigger: "main .card a[href$='-1']",
@@ -34,6 +29,11 @@ odoo.define("crowdfunding.tours.crowdfunding_frontend", function (require) {
                 run: "text Streetname 42",
             },
             {
+                content: "Fill in your zipcode",
+                trigger: "input#zip",
+                run: "text " + values.zip,
+            },
+            {
                 content: "Fill in your city",
                 trigger: "input#city",
                 run: "text Testcity",
@@ -42,7 +42,10 @@ odoo.define("crowdfunding.tours.crowdfunding_frontend", function (require) {
                 content: "Fill in your country",
                 trigger: "select#country_id",
                 run: () => {
-                    $("select#country_id option:nth-child(2)").prop("selected", true);
+                    $("select#country_id option:contains(" + values.country + ")").prop(
+                        "selected",
+                        true
+                    );
                 },
             },
             {
@@ -66,6 +69,30 @@ odoo.define("crowdfunding.tours.crowdfunding_frontend", function (require) {
                 content: "Last trigger",
                 trigger: "body",
             },
-        ]
+        ];
+    }
+
+    tour.register(
+        "crowdfunding_frontend_us",
+        {
+            test: true,
+            url: "/crowdfunding",
+        },
+        crowdfunding_frontend_steps({
+            zip: "4242",
+            country: "United States",
+        })
+    );
+
+    tour.register(
+        "crowdfunding_frontend_nl",
+        {
+            test: true,
+            url: "/crowdfunding",
+        },
+        crowdfunding_frontend_steps({
+            zip: "4242AB",
+            country: "Netherlands",
+        })
     );
 });
