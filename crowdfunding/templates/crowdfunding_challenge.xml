@@ -18,6 +18,9 @@
                             </a>
                         </div>
                     </div>
+                    <div class="form-inline justify-content-center my-3">
+                        <t t-call="website.pager" />
+                    </div>
                 </div>
             </div>
         </t>

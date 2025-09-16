@@ -7,17 +7,42 @@ from odoo.http import request
 
 
 class CrowdfundingController(http.Controller):
-    @http.route(["/crowdfunding"], type="http", auth="public", website=True)
-    def list(self):
-        values = self._list_render_context()
+    @http.route(
+        ["/crowdfunding", "/crowdfunding/page/<int:page>"],
+        type="http",
+        auth="public",
+        website=True,
+    )
+    def list(self, page=1):
+        values = self._list_render_context(page)
         return request.render("crowdfunding.template_challenge_list", values)
 
-    def _list_render_context(self):
+    def _list_render_context(self, page):
+        website = request.website
         CrowdfundingChallenge = request.env["crowdfunding.challenge"]
+        domain = (
+            request.env.user._is_public()
+            and CrowdfundingChallenge._domain_website_access()
+        )
+        result_count = CrowdfundingChallenge.search_count(domain)
+        step = 5
+        pager = website.pager(
+            url="/crowdfunding",
+            total=result_count,
+            page=page,
+            step=step,
+            scope=5,
+        )
+
+        results = CrowdfundingChallenge.search(
+            domain,
+            offset=pager["offset"],
+            limit=step,
+        )
+
         return {
-            "results": CrowdfundingChallenge.search(
-                CrowdfundingChallenge._domain_website_access()
-            )
+            "results": results,
+            "pager": pager,
         }
 
     @http.route(
