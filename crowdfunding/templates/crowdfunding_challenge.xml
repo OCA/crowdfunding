@@ -2,8 +2,46 @@
 <!-- Copyright 2025 Hunki Enterprises BV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
 <data>
+
+    <template id="crowdfunding_navbar">
+        <nav class="navbar navbar-light">
+            <div class="container">
+                <span class="navbar-brand h4 my-0 mr-auto">Challenges</span>
+                <t t-call="crowdfunding.crowdfunding_search" />
+                <t t-call="crowdfunding.crowdfunding_filters" />
+            </div>
+        </nav>
+    </template>
+
+    <template id="crowdfunding_filters">
+        <div class="dropdown nav-item btn">
+            <a href="#" role="button" data-toggle="dropdown">
+                Filter by
+            </a>
+            <div class="dropdown-menu">
+                <t t-foreach="filters" t-as="filterby">
+                    <li>
+                        <a
+                            t-attf-href="/crowdfunding/filterby/{{ filterby['key'] }}"
+                            class="dropdown-item"
+                        >
+                            <t t-esc="filterby['label']" />
+                        </a>
+                    </li>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="crowdfunding_search">
+        <form method="get" class="navbar-search ml-auto pagination form-inline">
+            <t t-call="website.website_search_box" />
+        </form>
+    </template>
+
     <template id="template_challenge_list" name="Crowdfunding">
         <t t-call="website.layout">
+            <t t-call="crowdfunding.crowdfunding_navbar" />
             <div id="wrap">
                 <nav class="navbar navbar-light border-top">
                     <div class="container">
@@ -13,9 +51,9 @@
                 <div class="container">
                     <div class="card" t-foreach="results" t-as="result">
                         <div class="card-body">
-                            <a t-att-href="result.website_url">
-                                <t t-esc="result.name" />
-                            </a>
+                            <a t-att-href="result.website_url"><t
+                                    t-esc="result.name"
+                                /></a>
                         </div>
                     </div>
                     <div class="form-inline justify-content-center my-3">
@@ -27,6 +65,52 @@
     </template>
 
     <template id="template_challenge_detail">
+        <t t-call="website.layout">
+            <t t-set="additional_title" t-value="object.name" />
+            <div id="wrap">
+                <div class="container">
+                    <section class="mb24">
+                        <div class="container">
+                            <h1 t-field="object.name" />
+                            <img
+                                t-attf-src="/web/image/crowdfunding.challenge/{{object.id}}/description_image"
+                                t-if="object.description_image"
+                            />
+                            <div t-field="object.description" />
+                        </div>
+                        <div class="container" t-if="object.target_amount">
+                            Amount needed: <span t-field="object.target_amount" />
+                        </div>
+                        <div class="container">
+                            Amount pledged: <span
+                                t-field="object.pledged_amount"
+                            /> (<span t-esc="round(object.pledged_percentage)" />%)
+                        </div>
+                        <div class="container" t-if="object.description_url"><a
+                                t-att-href="object.description_url"
+                            >More information</a></div>
+                        <div class="container" t-if="object.claimed_partner_id">
+                            <t>
+                                <span t-if="object.state == 'claimed'">Claimed by</span>
+                                <span
+                                    t-if="object.state == 'submitted'"
+                                >Submitted by</span>
+                                <span t-if="object.state == 'done'">Delivered by</span>
+                            </t>
+                            <t t-esc="object.claimed_partner_id.sudo().name" />
+                        </div>
+                        <ul class="nav">
+                            <li t-if="object._can_pay()" class="nav-item m-1">
+                                <a
+                                    class="btn btn-primary"
+                                    t-attf-href="/crowdfunding/{{object.id}}/pay"
+                                >Pledge</a>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </t>
         <div class="container">
             <h1 t-field="object.name" />
             <img

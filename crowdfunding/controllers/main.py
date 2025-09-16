@@ -23,6 +23,7 @@ class CrowdfundingController(http.Controller):
         domain = (
             request.env.user._is_public()
             and CrowdfundingChallenge._domain_website_access()
+            or CrowdfundingChallenge._domain_portal_access()
         )
         result_count = CrowdfundingChallenge.search_count(domain)
         step = 5

@@ -430,7 +430,7 @@ class CrowdfundingChallenge(models.Model):
             "done": {"label": _("Done"), "domain": _domain([("state", "=", "done")])},
             "my_pledges": {
                 "label": _("Pledged by Me"),
-                "domain": [("invoice_ids.partner_id", "in", [partner_id])],
+                "domain": [("invoice_ids.partner_id", "in", partner_id)],
             },
         }
         return filters
