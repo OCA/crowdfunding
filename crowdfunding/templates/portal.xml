@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="portal_my_home_menu_crowdfunding_challenge"
+        name="Portal layout : crowdfunding_challenge menu entries"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="25"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+                t-if="page_name == 'crowdfunding_challenge' or crowdfunding_challenge"
+                t-attf-class="breadcrumb-item #{'active ' if not crowdfunding_challenge else ''}"
+            >
+                <a
+                    t-if="crowdfunding_challenge"
+                    t-attf-href="/my/crowdfunding?{{ keep_query() }}"
+                >
+                    Crowdfunding Challenges
+                </a>
+                <t t-else="">Crowdfunding Challenges</t>
+            </li>
+            <li t-if="crowdfunding_challenge" class="breadcrumb-item active">
+                <t t-esc="crowdfunding_challenge.name" />
+            </li>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_home_crowdfunding_challenge"
+        name="Show Crowdfunding Challenges"
+        customize_show="True"
+        inherit_id="portal.portal_my_home"
+        priority="25"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Crowdfunding Challenges</t>
+                <t t-set="url" t-value="'/my/crowdfunding'" />
+                <t t-set="placeholder_count" t-value="'challenge_count'" />
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_crowdfunding_challenges"
+        name="Portal: My Crowdfunding Challenges"
+    >
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar" />
+            <t t-if="challenges" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Challenge</th>
+                        <th>Status</th>
+                        <th>Funding Status</th>
+                        <th class="text-right">My Pledge</th>
+                        <th class="text-right" colspan="2">Pledged / Target Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="challenges" t-as="challenge">
+                        <tr>
+                            <td>
+                                <a t-att-href="challenge.get_portal_url()">
+                                    <t t-esc="challenge.name" />
+                                </a>
+                            </td>
+
+                            <td>
+                                <t t-call="crowdfunding.challenge_status_badge" />
+                            </td>
+
+                            <td>
+                                <t t-call="crowdfunding.funding_status_badge" />
+                            </td>
+                            <td class="text-right">
+                                <span
+                                    t-field="challenge.my_pledged_amount"
+                                    t-options='{"widget": "monetary", "display_currency": challenge.currency_id}'
+                                />
+                            </td>
+                            <td class="text-right">
+                                <span
+                                    t-field="challenge.pledged_amount"
+                                    t-options='{"widget": "monetary", "display_currency": challenge.currency_id}'
+                                />
+                                /
+                                <span
+                                    class="text-bold"
+                                    t-field="challenge.target_amount"
+                                    t-options='{"widget": "monetary", "display_currency": challenge.currency_id}'
+                                />
+                            </td>
+
+
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
+    <template
+        id="portal_my_crowdfunding_challenge"
+        name="Portal: My Crowdfunding Challenge"
+    >
+        <t t-call="portal.portal_layout">
+            <t t-set="crowdfunding_challenge" t-value="challenge" />
+            <t t-set="o_portal_fullwidth_alert" groups="crowdfunding.group_user">
+            </t>
+            <div id="optional_placeholder" />
+            <div class="container">
+                <div class="row mt16 o_portal_crowdfunding_challenge_sidebar">
+                    <!-- Sidebar -->
+                    <t t-call="portal.portal_record_sidebar">
+                        <t t-set="classes" t-value="'col-lg-auto d-print-none'" />
+                        <t t-set="title">
+                            <h2 class="mb-0" t-field="challenge.name" />
+                        </t>
+                        <t t-set="entries">
+                            <ul
+                                class="list-group list-group-flush flex-wrap flex-row flex-lg-column"
+                            >
+                                <li class="list-group-item">
+                                    <!-- Status -->
+                                    <div
+                                        class="d-flex flex-row mt-2 align-items-center"
+                                    >
+                                        <div class="flex-column">
+                                            <strong class="text-muted">
+                                                Status:
+                                            </strong>
+                                        </div>
+                                        <div class="flex-column ml-2">
+                                            <t
+                                                t-call="crowdfunding.challenge_status_badge"
+                                            >
+                                                <t t-set="hide_avatar" t-value="True" />
+                                            </t>
+                                        </div>
+                                    </div>
+
+                                    <!-- Funding Status -->
+                                    <div
+                                        class="d-flex flex-row mt-2 align-items-center"
+                                    >
+                                        <div class="flex-column">
+                                            <strong class="text-muted">
+                                                Funding:
+                                            </strong>
+                                        </div>
+                                        <div class="flex-column ml-2">
+                                            <t
+                                                t-call="crowdfunding.funding_status_badge"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <!-- Pledged / Target Amount -->
+                                    <div class="flex-row mt-2">
+                                        <div class="flex-column">
+                                            <strong class="text-muted">
+                                                Pledged:
+                                            </strong>
+                                        </div>
+                                        <div class="flex-column ml-2">
+                                            <span
+                                                t-field="challenge.pledged_amount"
+                                                t-options='{"widget": "monetary", "display_currency": challenge.currency_id}'
+                                            />
+                                            <span>of</span>
+                                            <strong
+                                                t-field="challenge.target_amount"
+                                                t-options='{"widget": "monetary", "display_currency": challenge.currency_id}'
+                                            />
+                                            <span>goal</span>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!-- Claimed By -->
+                                <li
+                                    t-if="challenge.claimed_partner_id"
+                                    class="list-group-item flex-grow-1"
+                                >
+                                    <div class="small mb-1">
+                                        <strong class="text-muted">
+                                            Claimed By:
+                                        </strong>
+                                    </div>
+                                    <div class="row flex-nowrap">
+                                        <div class="col flex-grow-0 pr-2">
+                                            <img
+                                                class="rounded-circle mr4 float-left o_portal_contact_img"
+                                                t-if="challenge.claimed_partner_id.image_1024"
+                                                t-att-src="image_data_uri(challenge.claimed_partner_id.sudo().image_1024)"
+                                                alt="Contact"
+                                            />
+                                            <img
+                                                class="rounded-circle mr4 float-left o_portal_contact_img"
+                                                t-if="not challenge.claimed_partner_id.sudo().image_1024"
+                                                src="/web/static/src/img/placeholder.png"
+                                                alt="Contact"
+                                            />
+                                        </div>
+                                        <div class="col pl-0" style="min-width: 150px">
+                                            <span
+                                                t-field="challenge.sudo().claimed_partner_id"
+                                                t-options='{"widget": "contact", "fields": ["name", "phone"], "no_marker": True}'
+                                            />
+                                            <a href="#discussion" class="small">
+                                                <i class="fa fa-comment" />
+                                                Send message
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </t>
+                    </t>
+
+                    <!-- Main content -->
+                    <div class=" col-lg col-12 justify-content-end w-100">
+                        <div class="card pb-5">
+                            <div class="card-header bg-white pb-1">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h2 class="font-weight-normal">
+                                            Crowdfunding Challenge
+                                            <span
+                                                class="font-italic"
+                                                t-esc="challenge.name"
+                                            />
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <t t-call="crowdfunding.template_challenge_detail">
+                                    <t t-set="object" t-value="challenge" />
+                                </t>
+                            </div>
+                        </div>
+                        <div id="crowdfunding_challenge_communication" class="mt-4">
+                            <h2>History</h2>
+                            <t t-call="portal.message_thread">
+                                <t t-set="object" t-value="crowdfunding_challenge" />
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure mb32" />
+        </t>
+    </template>
+
+    <template id="funding_status_badge" name="Funding Status Badge">
+        <span t-if="challenge.funding_state == 'funded'" class="badge badge-success">
+            <i class="fa fa-fw fa-check" />
+            Funded
+        </span>
+
+        <span t-elif="challenge.pledged_percentage == 0.0" class="badge badge-danger">
+            <i class="fa fa-fw fa-remove" />
+            Needs Funding
+        </span>
+
+        <span t-else="" class="badge badge-warning">
+            <span class="text-muted" t-field="challenge.pledged_percentage" />% Funded
+        </span>
+    </template>
+    <template id="challenge_status_badge" name="Challenge Status Badge">
+        <t t-if="challenge.state == 'draft'">
+            <span class="badge badge-info text-muted">
+                <i class="fa fa-fw fa-file-text" />
+                Draft
+            </span>
+        </t>
+        <t t-if="challenge.state == 'open'">
+            <span class="badge badge-secondary">
+                <i class="fa fa-fw fa-remove" />
+                Open
+            </span>
+        </t>
+        <t t-if="challenge.state == 'claimed'">
+            <div class="d-flex align-items-center mb2">
+                <img
+                    class="rounded-circle mr4 float-left o_portal_contact_img"
+                    t-if="not hide_avatar and challenge.claimed_partner_id.sudo().image_1024"
+                    t-att-src="image_data_uri(challenge.claimed_partner_id.sudo().image_1024)"
+                    alt="Contact"
+                />
+
+                <span class="badge badge-success">
+                    Claimed
+                </span>
+            </div>
+        </t>
+        <t t-if="challenge.state == 'submitted'">
+            <span class="badge badge-secondary">
+                <i class="fa fa-fw fa-remove" />
+                Submitted
+            </span>
+        </t>
+        <t t-if="challenge.state == 'done'">
+            <span class="badge badge-secondary">
+                <i class="fa fa-fw fa-remove" />
+                Done
+            </span>
+        </t>
+    </template>
+
+
+</odoo>

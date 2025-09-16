@@ -16,10 +16,8 @@ class CrowdfundingController(http.Controller):
         CrowdfundingChallenge = request.env["crowdfunding.challenge"]
         return {
             "results": CrowdfundingChallenge.search(
-                request.env.user._is_public()
-                and CrowdfundingChallenge._domain_website_access()
-                or CrowdfundingChallenge._domain_portal_access()
-            ),
+                CrowdfundingChallenge._domain_website_access()
+            )
         }
 
     @http.route(
@@ -30,7 +28,7 @@ class CrowdfundingController(http.Controller):
     )
     def detail(self, challenge):
         values = self._detail_render_context(challenge)
-        return request.render("crowdfunding.template_challenge_detail", values)
+        return request.render("crowdfunding.template_challenge_website", values)
 
     def _detail_render_context(self, challenge, **kwargs):
         payment_access_token = None

@@ -21,7 +21,7 @@ class CrowdfundingController(crowdfunding_main.CrowdfundingController):
             challenge.sudo()._claim(request.env.user.partner_id)
             values = self._detail_render_context(challenge)
             values["hide_discuss"] = True
-            return request.render("crowdfunding.template_challenge_detail", values)
+            return request.render("crowdfunding.template_challenge_website", values)
         else:
             # TODO nicer error
             raise werkzeug.exceptions.NotFound()

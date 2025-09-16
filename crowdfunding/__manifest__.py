@@ -15,6 +15,7 @@
         "account_payment",
         "onchange_helper",
         "website",
+        "portal",
     ],
     "data": [
         "data/product_product.xml",
@@ -24,6 +25,7 @@
         "templates/assets.xml",
         "templates/crowdfunding_challenge.xml",
         "templates/payment.xml",
+        "templates/portal.xml",
         "views/account_move.xml",
         "views/crowdfunding_challenge.xml",
         "views/payment_transaction.xml",
