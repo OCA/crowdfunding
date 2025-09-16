@@ -31,7 +31,7 @@ Crowdfunding (demo data)
 This module does some setup so that crowdfunding can be conveniently
 tests on runbot:
 
--  create and configure payment providers
+- create and configure payment providers
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -69,8 +69,8 @@ Authors
 Contributors
 ------------
 
--  Holger Brunn <mail@hunki-enterprises.com>
-   (https://hunki-enterprises.com)
+- Holger Brunn <mail@hunki-enterprises.com>
+  (https://hunki-enterprises.com)
 
 Maintainers
 -----------

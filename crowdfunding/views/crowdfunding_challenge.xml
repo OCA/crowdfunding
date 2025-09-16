@@ -147,7 +147,11 @@
                                         name="company_id"
                                         groups="base.group_multi_company"
                                     />
-                                    <field name="tag_ids" widget="many2many_tags" options="{'no_create':True}"/>
+                                    <field
+                                        name="tag_ids"
+                                        widget="many2many_tags"
+                                        options="{'no_create':True}"
+                                    />
                                 </group>
                             </group>
                         </page>
