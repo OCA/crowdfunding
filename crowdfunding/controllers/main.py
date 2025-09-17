@@ -7,43 +7,67 @@ from odoo.http import request
 
 
 class CrowdfundingController(http.Controller):
+    _step = 10
+    _scope = 10
+
     @http.route(
-        ["/crowdfunding", "/crowdfunding/page/<int:page>"],
+        [
+            "/crowdfunding",
+            "/crowdfunding/page/<int:page>",
+        ],
         type="http",
         auth="public",
         website=True,
     )
-    def list(self, page=1):
-        values = self._list_render_context(page)
+    def list(self, page=1, filterby=False, **searchvals):
+        values = self._list_render_context(page, filterby, searchvals)
         return request.render("crowdfunding.template_challenge_list", values)
 
-    def _list_render_context(self, page):
+    def _list_render_context(self, page, filterby=False, searchvals=None):
         website = request.website
         CrowdfundingChallenge = request.env["crowdfunding.challenge"]
-        domain = (
-            request.env.user._is_public()
-            and CrowdfundingChallenge._domain_website_access()
-            or CrowdfundingChallenge._domain_portal_access()
-        )
+        searchbar_filters = CrowdfundingChallenge._searchbar_filters()
+
+        domain = CrowdfundingChallenge._domain_website_access()
+
+        url_args = {}
+        if filterby and filterby != "all":
+            domain.append(searchbar_filters.get(filterby, {}).get("domain", [])[0])
+            url_args["filterby"] = filterby
+
+        if searchvals.get("search"):
+            domain.append(["name", "ilike", searchvals["search"]])
+            url_args["search"] = searchvals["search"]
+
         result_count = CrowdfundingChallenge.search_count(domain)
-        step = 5
         pager = website.pager(
             url="/crowdfunding",
             total=result_count,
             page=page,
-            step=step,
-            scope=5,
+            step=self._step,
+            scope=self._scope,
+            url_args=url_args,
         )
 
         results = CrowdfundingChallenge.search(
             domain,
             offset=pager["offset"],
-            limit=step,
+            limit=self._step,
         )
+
+        # Reusing searchbar_filters for the portal view,
+        # but manipulating to ensure this works when rendering
+        # website templates
+        filters = []
+        for x in searchbar_filters:
+            searchbar_filters[x]["key"] = x
+            filters.append(searchbar_filters[x])
 
         return {
             "results": results,
             "pager": pager,
+            "filters": filters,
+            "request": request,
         }
 
     @http.route(
