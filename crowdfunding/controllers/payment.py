@@ -36,8 +36,6 @@ class Payment(WebsitePayment):
             or not request.env["res.country"].browse(int(values["country_id"])).exists()
         ):
             errors["country_id"] = _("Invalid country")
-        if values.get("zip") and not values.get("zip").isdigit():
-            errors["zip"] = _("Invalid Zip")
 
         return errors
 
