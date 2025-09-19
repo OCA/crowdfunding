@@ -15,9 +15,11 @@
         "crowdfunding",
         "payment_test",
         "payment_transfer",
+        "l10n_ch",
     ],
     "demo": [
         "demo/payment_acquirer.xml",
+        "demo/product_product.xml",
         "demo/res_company.xml",
     ],
 }
