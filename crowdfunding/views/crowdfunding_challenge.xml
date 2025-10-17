@@ -147,6 +147,11 @@
                                         name="company_id"
                                         groups="base.group_multi_company"
                                     />
+                                    <field
+                                        name="tag_ids"
+                                        widget="many2many_tags"
+                                        options="{'no_create':True}"
+                                    />
                                 </group>
                             </group>
                         </page>
@@ -172,6 +177,7 @@
                 <field name="pledged_amount_total" />
                 <field name="vendor_amount" />
                 <field name="website_published" />
+                <field name="company_id" groups="base.group_multi_company" />
                 <field name="pledged_percentage" widget="float" />
             </tree>
         </field>

@@ -26,6 +26,7 @@
         "templates/payment.xml",
         "views/account_move.xml",
         "views/crowdfunding_challenge.xml",
+        "views/crowdfunding_tag.xml",
         "views/payment_transaction.xml",
         "views/res_config_settings.xml",
         "views/menu.xml",

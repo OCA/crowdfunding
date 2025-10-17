@@ -140,6 +140,11 @@ class CrowdfundingChallenge(models.Model):
     company_id = fields.Many2one(
         "res.company", required=True, default=lambda self: self.env.company
     )
+    tag_ids = fields.Many2many(
+        comodel_name="crowdfunding.tag",
+        string="Tags",
+        check_company=True,
+    )
 
     def _default_fee_percentage(self):
         company = (
