@@ -3,3 +3,4 @@
 -   Henrik Norlin \<henrik@loym.com>
 -   James Bos \<james@godoo.com.au> (https://www.jamesbos.com)
 -   David James \<david@godoo.com.au> (https://godoo.net)
+-   Thibault Rey \<thibault.rey@akretion.com> (https://akretion.com)

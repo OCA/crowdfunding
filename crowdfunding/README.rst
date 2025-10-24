@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============
 Crowdfunding
 ============
@@ -17,7 +13,7 @@ Crowdfunding
 .. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fcrowdfunding-lightgray.png?logo=github
@@ -82,15 +78,15 @@ Known issues / Roadmap
 As this module is designed to provide the bare neccessities, a couple of
 other modules will add more advanced functionality
 
-- crowdfunding_membership allowing to restrict creating/claiming to
-  members only
-- crowdfunding_project allowing to create crowdfunding challenges from
-  projects/tasks or vice versa
-- crowdfunding_github allowing to create crowdfunding challenges from
-  issues of some github project
-- crowdfunding_gitlab the same as above but for gitlab
-- crowdfunding_category allowing to move some of the base company wide
-  configuration to categories
+-  crowdfunding_membership allowing to restrict creating/claiming to
+   members only
+-  crowdfunding_project allowing to create crowdfunding challenges from
+   projects/tasks or vice versa
+-  crowdfunding_github allowing to create crowdfunding challenges from
+   issues of some github project
+-  crowdfunding_gitlab the same as above but for gitlab
+-  crowdfunding_category allowing to move some of the base company wide
+   configuration to categories
 
 Bug Tracker
 ===========
@@ -113,13 +109,14 @@ Authors
 Contributors
 ------------
 
-- Holger Brunn <mail@hunki-enterprises.com>
-  (https://hunki-enterprises.com)
-- Houssine Bakkali <houssine.bakkali@gmail.com> Open Architects
-  Consulting SRL (https://github.com/houssine78)
-- Henrik Norlin <henrik@loym.com>
-- James Bos <james@godoo.com.au> (https://www.jamesbos.com)
-- David James <david@godoo.com.au> (https://godoo.net)
+-  Holger Brunn <mail@hunki-enterprises.com>
+   (https://hunki-enterprises.com)
+-  Houssine Bakkali <houssine.bakkali@gmail.com> Open Architects
+   Consulting SRL (https://github.com/houssine78)
+-  Henrik Norlin <henrik@loym.com>
+-  James Bos <james@godoo.com.au> (https://www.jamesbos.com)
+-  David James <david@godoo.com.au> (https://godoo.net)
+-  Thibault Rey <thibault.rey@akretion.com> (https://akretion.com)
 
 Maintainers
 -----------
