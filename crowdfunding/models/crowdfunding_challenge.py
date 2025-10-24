@@ -56,7 +56,7 @@ class CrowdfundingChallenge(models.Model):
         compute="_compute_amounts",
         store=True,
         readonly=True,
-        string="Vendor Amount",
+        string="Unposted Vendor Amount",
         help="The amount to be paid out",
     )
     funding_state = fields.Selection(
@@ -83,14 +83,14 @@ class CrowdfundingChallenge(models.Model):
         tracking=True,
     )
     pledged_amount_total = fields.Monetary(
-        string="Pledged Amount + Unpaid",
+        string="Pledges Total",
         compute="_compute_invoices",
         readonly=True,
         store=True,
         tracking=True,
     )
     pledged_amount_unpaid = fields.Monetary(
-        string="Unpaid Pledges",
+        string="Unposted Pledges",
         compute="_compute_invoices",
         readonly=True,
         store=True,
@@ -107,21 +107,21 @@ class CrowdfundingChallenge(models.Model):
         domain=[("move_type", "in", ["out_invoice", "out_refund"])],
     )
     vendor_amount = fields.Monetary(
-        "Vendor Amount Paid",
+        "Vendor Amount",
         compute="_compute_vendor_bills",
         readonly=True,
         store=True,
         tracking=True,
     )
     vendor_amount_unpaid = fields.Monetary(
-        "Vendor Amount Unpaid",
+        "Vendor Amount Unposted",
         compute="_compute_vendor_bills",
         readonly=True,
         store=True,
         tracking=True,
     )
     vendor_amount_total = fields.Monetary(
-        "Amount To Pay + Paid",
+        "Vendor Amount Total",
         compute="_compute_vendor_bills",
         readonly=True,
         store=True,
