@@ -34,11 +34,6 @@ msgid "Amount"
 msgstr ""
 
 #. module: crowdfunding
-#: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__vendor_amount_total
-msgid "Amount To Pay + Paid"
-msgstr ""
-
-#. module: crowdfunding
 #: model_terms:ir.ui.view,arch_db:crowdfunding.template_challenge_detail
 msgid "Amount needed:"
 msgstr ""
@@ -532,7 +527,7 @@ msgstr ""
 
 #. module: crowdfunding
 #: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__pledged_amount_total
-msgid "Pledged Amount + Unpaid"
+msgid "Pledges Total"
 msgstr ""
 
 #. module: crowdfunding
@@ -652,7 +647,12 @@ msgstr ""
 
 #. module: crowdfunding
 #: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__pledged_amount_unpaid
-msgid "Unpaid Pledges"
+msgid "Unposted Pledges"
+msgstr ""
+
+#. module: crowdfunding
+#: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__claimed_partner_amount
+msgid "Unposted Vendor Amount"
 msgstr ""
 
 #. module: crowdfunding
@@ -676,21 +676,21 @@ msgid "Vendor"
 msgstr ""
 
 #. module: crowdfunding
-#: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__claimed_partner_amount
-msgid "Vendor Amount"
-msgstr ""
-
-#. module: crowdfunding
 #: model:ir.model.fields,field_description:crowdfunding.field_account_bank_statement_line__crowdfunding_vendor_amount
 #: model:ir.model.fields,field_description:crowdfunding.field_account_move__crowdfunding_vendor_amount
 #: model:ir.model.fields,field_description:crowdfunding.field_account_payment__crowdfunding_vendor_amount
 #: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__vendor_amount
-msgid "Vendor Amount Paid"
+msgid "Vendor Amount"
+msgstr ""
+
+#. module: crowdfunding
+#: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__vendor_amount_total
+msgid "Vendor Amount Total"
 msgstr ""
 
 #. module: crowdfunding
 #: model:ir.model.fields,field_description:crowdfunding.field_crowdfunding_challenge__vendor_amount_unpaid
-msgid "Vendor Amount Unpaid"
+msgid "Vendor Amount Unposted"
 msgstr ""
 
 #. module: crowdfunding
