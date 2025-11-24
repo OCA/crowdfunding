@@ -4,7 +4,7 @@
 {
     "name": "Crowdfunding",
     "summary": "Turn Odoo into a platform for crowdfunding",
-    "version": "14.0.1.1.0",
+    "version": "14.0.1.1.1",
     "development_status": "Alpha",
     "category": "Crowdfunding",
     "website": "https://github.com/OCA/crowdfunding",
