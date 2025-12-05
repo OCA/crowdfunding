@@ -7,23 +7,22 @@
         inherit_id="crowdfunding.template_challenge_detail"
     >
         <xpath expr="//ul[hasclass('nav')]/li" position="before">
-                            <li t-if="object._can_claim()" class="nav-item m-1">
-                            <form
-                    t-attf-action="{{object.website_url}}/claim"
-                    method="post"
-                >
-                                <input
+            <li t-if="object._can_claim()" class="nav-item m-1">
+            <form t-attf-action="{{object.website_url}}/claim" method="post">
+                <input
                         type="hidden"
                         name="csrf_token"
                         t-att-value="request.csrf_token()"
                     />
-                                <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >Claim</button>
-                            </form>
-                            </li>
+                <button type="submit" class="btn btn-primary">Claim</button>
+            </form>
+            </li>
         </xpath>
+    </template>
+    <template
+        id="template_challenge_detail_discuss"
+        inherit_id="crowdfunding.template_challenge_detail_discuss"
+    >
         <xpath expr="//div[@id='discuss']" position="attributes">
             <attribute name="t-if">not hide_discuss</attribute>
         </xpath>
