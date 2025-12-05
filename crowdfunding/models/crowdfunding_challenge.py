@@ -268,6 +268,11 @@ class CrowdfundingChallenge(models.Model):
                 ("crowdfunding_challenge_id", "in", self.ids),
                 ("move_type", "in", ["out_invoice", "out_refund"]),
             ],
+            context=dict(
+                tools.safe_eval.const_eval(action["context"]),
+                search_default_posted=True,
+                search_default_draft=True,
+            ),
         )
 
     def action_vendor_bills(self):
@@ -280,6 +285,11 @@ class CrowdfundingChallenge(models.Model):
                 ("crowdfunding_challenge_id", "in", self.ids),
                 ("move_type", "in", ["in_invoice", "in_refund"]),
             ],
+            context=dict(
+                tools.safe_eval.const_eval(action["context"]),
+                search_default_posted=True,
+                search_default_draft=True,
+            ),
         )
 
     def action_invoice_wizard(self):
