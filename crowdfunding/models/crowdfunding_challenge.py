@@ -9,7 +9,12 @@ from odoo.addons.http_routing.models.ir_http import slug
 class CrowdfundingChallenge(models.Model):
     _name = "crowdfunding.challenge"
     _description = "Crowdfunding challenge"
-    _inherit = ["mail.thread", "website.published.mixin", "website.seo.metadata"]
+    _inherit = [
+        "mail.thread",
+        "website.published.mixin",
+        "website.seo.metadata",
+        "website.cover_properties.mixin",
+    ]
     _mail_post_access = "read"
     _mail_flat_thread = False
 
