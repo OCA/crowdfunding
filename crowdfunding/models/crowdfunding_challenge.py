@@ -184,33 +184,39 @@ class CrowdfundingChallenge(models.Model):
                 "needs_funding" if this.pledged_percentage < 100 else "funded"
             )
 
-    @api.depends("invoice_ids.amount_total", "invoice_ids.amount_residual")
+    @api.depends(
+        "invoice_ids.amount_total", "invoice_ids.amount_residual", "invoice_ids.state"
+    )
     def _compute_invoices(self):
         for this in self:
-            this.invoice_count = len(this.invoice_ids)
+            invoices = this.invoice_ids.filtered(lambda x: x.state != "cancel")
+            this.invoice_count = len(invoices)
             this.pledged_amount = sum(
-                this.invoice_ids.filtered(lambda x: x.state == "posted").mapped(
+                invoices.filtered(lambda x: x.state == "posted").mapped(
                     "amount_total_signed"
                 )
             )
             this.pledged_amount_unpaid = (
-                sum(this.invoice_ids.mapped("amount_total_signed"))
-                - this.pledged_amount
+                sum(invoices.mapped("amount_total_signed")) - this.pledged_amount
             )
             this.pledged_amount_total = this.pledged_amount + this.pledged_amount_unpaid
 
-    @api.depends("vendor_bill_ids.amount_total", "vendor_bill_ids.amount_residual")
+    @api.depends(
+        "vendor_bill_ids.amount_total",
+        "vendor_bill_ids.amount_residual",
+        "vendor_bill_ids.state",
+    )
     def _compute_vendor_bills(self):
         for this in self:
-            this.vendor_bill_count = len(this.vendor_bill_ids)
+            vendor_bills = this.vendor_bill_ids.filtered(lambda x: x.state != "cancel")
+            this.vendor_bill_count = len(vendor_bills)
             this.vendor_amount = sum(
-                this.vendor_bill_ids.filtered(lambda x: x.state == "posted").mapped(
+                vendor_bills.filtered(lambda x: x.state == "posted").mapped(
                     "amount_total_signed"
                 )
             )
             this.vendor_amount_unpaid = (
-                sum(this.vendor_bill_ids.mapped("amount_total_signed"))
-                - this.vendor_amount
+                sum(vendor_bills.mapped("amount_total_signed")) - this.vendor_amount
             )
             this.vendor_amount_total = this.vendor_amount + this.vendor_amount_unpaid
 
