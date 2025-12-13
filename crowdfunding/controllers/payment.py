@@ -61,6 +61,9 @@ class Payment(WebsitePayment):
         request.session.setdefault("crowdfunding", {})["partner_id"] = partner.id
         return partner
 
+    def _crowdfunding_get_out_invoice_kwargs(self, challenge, partner, kwargs):
+        return {}
+
     @http.route(
         ["/crowdfunding/<model('crowdfunding.challenge'):challenge>/pay"],
         type="http",
@@ -91,7 +94,9 @@ class Payment(WebsitePayment):
         else:
             PaymentLinkWizard = request.env["payment.link.wizard"]
             invoice = challenge.sudo()._out_invoice(
-                partner, abs(float(kwargs["amount"]))
+                partner,
+                abs(float(kwargs["amount"])),
+                **self._crowdfunding_get_out_invoice_kwargs(challenge, partner, kwargs)
             )
             invoice.action_post()
 
