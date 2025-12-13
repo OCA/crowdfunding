@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-crowdfunding',
         'odoo14-addon-crowdfunding_claim',
         'odoo14-addon-crowdfunding_demo',
+        'odoo14-addon-crowdfunding_public_pledge',
     ],
     classifiers=[
         'Programming Language :: Python',
