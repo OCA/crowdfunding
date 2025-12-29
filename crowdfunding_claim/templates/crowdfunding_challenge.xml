@@ -3,8 +3,8 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
 <data>
     <template
-        id="template_challenge_detail"
-        inherit_id="crowdfunding.template_challenge_detail"
+        id="template_challenge_pledge"
+        inherit_id="crowdfunding.template_challenge_pledge"
     >
         <xpath expr="//ul[hasclass('nav')]/li" position="before">
                             <li t-if="object._can_claim()" class="nav-item m-1">
@@ -24,6 +24,11 @@
                             </form>
                             </li>
         </xpath>
+    </template>
+    <template
+        id="template_challenge_website"
+        inherit_id="crowdfunding.template_challenge_website"
+    >
         <xpath expr="//div[@id='discuss']" position="attributes">
             <attribute name="t-if">not hide_discuss</attribute>
         </xpath>

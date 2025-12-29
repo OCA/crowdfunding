@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
 from odoo import _, api, exceptions, fields, models, tools
+from odoo.osv.expression import AND
 
 from odoo.addons.http_routing.models.ir_http import slug
 
@@ -9,7 +10,12 @@ from odoo.addons.http_routing.models.ir_http import slug
 class CrowdfundingChallenge(models.Model):
     _name = "crowdfunding.challenge"
     _description = "Crowdfunding challenge"
-    _inherit = ["mail.thread", "website.published.mixin", "website.seo.metadata"]
+    _inherit = [
+        "portal.mixin",
+        "mail.thread",
+        "website.published.mixin",
+        "website.seo.metadata",
+    ]
     _mail_post_access = "read"
     _mail_flat_thread = False
 
@@ -82,6 +88,7 @@ class CrowdfundingChallenge(models.Model):
         store=True,
         tracking=True,
     )
+    my_pledged_amount = fields.Monetary(compute="_compute_my_pledged_amount")
     pledged_amount_total = fields.Monetary(
         string="Pledges Total",
         compute="_compute_invoices",
@@ -184,6 +191,29 @@ class CrowdfundingChallenge(models.Model):
             )
             this.pledged_amount_total = this.pledged_amount + this.pledged_amount_unpaid
 
+    @api.depends(
+        "invoice_ids.amount_total",
+        "invoice_ids.amount_residual",
+        "invoice_ids.partner_id",
+        "invoice_ids.state",
+    )
+    @api.depends_context("uid")
+    def _compute_my_pledged_amount(self):
+        data = {
+            d["crowdfunding_challenge_id"][0]: d["amount_total_signed"]
+            for d in self.env["account.move"]._read_group_raw(
+                [
+                    ("crowdfunding_challenge_id", "in", self.ids),
+                    ("partner_id", "=", self.env.user.partner_id.id),
+                    ("state", "=", "posted"),
+                ],
+                ["amount_total_signed:sum", "crowdfunding_challenge_id"],
+                ["crowdfunding_challenge_id"],
+            )
+        }
+        for this in self:
+            this.my_pledged_amount = data.get(this.id, 0.0)
+
     @api.depends("vendor_bill_ids.amount_total", "vendor_bill_ids.amount_residual")
     def _compute_vendor_bills(self):
         for this in self:
@@ -198,6 +228,11 @@ class CrowdfundingChallenge(models.Model):
                 - this.vendor_amount
             )
             this.vendor_amount_total = this.vendor_amount + this.vendor_amount_unpaid
+
+    def _compute_access_url(self):
+        super()._compute_access_url()
+        for this in self:
+            this.access_url = f"/my/crowdfunding/{slug(this)}"
 
     def _compute_website_url(self):
         for this in self:
@@ -352,7 +387,53 @@ class CrowdfundingChallenge(models.Model):
 
     @api.model
     def _domain_portal_access(self):
-        return [("is_published", "=", True)]
+        return [("invoice_ids.partner_id", "in", self.env.user.partner_id.ids)]
+
+    @api.model
+    def _searchbar_sortings(self):
+        return {
+            "date": {"label": _("Newest"), "order": "create_date desc, id desc"},
+            "name": {"label": _("Name"), "order": "name asc, id asc"},
+            "target_amount": {
+                "label": _("Target Amount"),
+                "order": "target_amount desc, id desc",
+            },
+            "pledged_amount": {
+                "label": _("Pledged Amount"),
+                "order": "pledged_amount desc, id desc",
+            },
+            "pledged_percentage": {
+                "label": _("Pledged Percentage"),
+                "order": "pledged_percentage desc, id desc",
+            },
+        }
+
+    @api.model
+    def _searchbar_filters(self, portal=False):
+        partner_id = self.env.user.partner_id.id
+        base_domain = self._domain_portal_access() if portal else []
+
+        def _domain(domain):
+            return AND([base_domain, domain]) if base_domain else domain
+
+        filters = {
+            "all": {"label": _("All"), "domain": base_domain},
+            "open": {"label": _("Open"), "domain": _domain([("state", "=", "open")])},
+            "claimed": {
+                "label": _("Claimed"),
+                "domain": _domain([("state", "=", "claimed")]),
+            },
+            "submitted": {
+                "label": _("Submitted"),
+                "domain": _domain([("state", "=", "submitted")]),
+            },
+            "done": {"label": _("Done"), "domain": _domain([("state", "=", "done")])},
+            "my_pledges": {
+                "label": _("Pledged by Me"),
+                "domain": [("invoice_ids.partner_id", "in", partner_id)],
+            },
+        }
+        return filters
 
     @api.model
     def _domain_website_access(self):
