@@ -4,7 +4,7 @@
 {
     "name": "Crowdfunding: Claim challenges",
     "summary": "Allow portal users to claim challenges",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "development_status": "Alpha",
     "category": "Crowdfunding",
     "website": "https://github.com/OCA/crowdfunding",
