@@ -6,6 +6,16 @@ from odoo import _, api, exceptions, fields, models, tools
 from odoo.addons.http_routing.models.ir_http import slug
 
 
+def _extend_context_str(context_str, **kwargs):
+    context_str = context_str.strip() or "{}"
+    return (
+        context_str[:-1]
+        + ("," if len(context_str) > 2 else "")
+        + (",".join(f"'{key}': {repr(value)}" for key, value in kwargs.items()))
+        + "}"
+    )
+
+
 class CrowdfundingChallenge(models.Model):
     _name = "crowdfunding.challenge"
     _description = "Crowdfunding challenge"
@@ -274,8 +284,8 @@ class CrowdfundingChallenge(models.Model):
                 ("crowdfunding_challenge_id", "in", self.ids),
                 ("move_type", "in", ["out_invoice", "out_refund"]),
             ],
-            context=dict(
-                tools.safe_eval.const_eval(action["context"]),
+            context=_extend_context_str(
+                action["context"],
                 search_default_posted=True,
                 search_default_draft=True,
             ),
@@ -291,8 +301,8 @@ class CrowdfundingChallenge(models.Model):
                 ("crowdfunding_challenge_id", "in", self.ids),
                 ("move_type", "in", ["in_invoice", "in_refund"]),
             ],
-            context=dict(
-                tools.safe_eval.const_eval(action["context"]),
+            context=_extend_context_str(
+                action["context"],
                 search_default_posted=True,
                 search_default_draft=True,
             ),
