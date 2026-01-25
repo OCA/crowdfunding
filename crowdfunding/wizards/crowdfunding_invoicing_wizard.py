@@ -33,7 +33,9 @@ class CrowdfundingInvoicingWizard(models.TransientModel):
     @api.depends("challenge_ids")
     def _compute_vendor_bill_ids(self):
         for this in self:
-            this.vendor_bill_ids = this.challenge_ids.vendor_bill_ids
+            this.vendor_bill_ids = this.challenge_ids.vendor_bill_ids.filtered(
+                lambda x: x.state != "cancel"
+            )
 
     def action_invoice(self):
         invoices = self.challenge_ids._in_invoice(self.percentage)
