@@ -4,7 +4,7 @@
 {
     "name": "Crowdfunding (demo data)",
     "summary": "Installs demo data to have crowdfunding up and running on runbot",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "development_status": "Alpha",
     "category": "Crowdfunding",
     "website": "https://github.com/OCA/crowdfunding",
