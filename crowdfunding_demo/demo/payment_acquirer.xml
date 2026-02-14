@@ -1,4 +1,3 @@
 <odoo>
-    <record id="payment.payment_acquirer_transfer" model="payment.acquirer">
-    </record>
+    <record id="payment.payment_acquirer_transfer" model="payment.acquirer" />
 </odoo>
