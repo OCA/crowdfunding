@@ -96,7 +96,7 @@ class Payment(WebsitePayment):
             invoice = challenge.sudo()._out_invoice(
                 partner,
                 abs(float(kwargs["amount"])),
-                **self._crowdfunding_get_out_invoice_kwargs(challenge, partner, kwargs)
+                **self._crowdfunding_get_out_invoice_kwargs(challenge, partner, kwargs),
             )
             invoice.action_post()
 

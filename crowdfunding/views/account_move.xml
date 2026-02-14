@@ -12,21 +12,21 @@
                     attrs="{'invisible': [('crowdfunding_challenge_id', '=', False), ('state', '!=', 'draft')]}"
                     string="Crowdfunding"
                 >
-                <group>
-                    <field name="crowdfunding_challenge_id" />
-                    <field
+                    <group>
+                        <field name="crowdfunding_challenge_id" />
+                        <field
                             name="crowdfunding_target_amount"
                             attrs="{'invisible': [('crowdfunding_challenge_id', '=', False)]}"
                         />
-                    <field
+                        <field
                             name="crowdfunding_pledged_amount"
                             attrs="{'invisible': [('crowdfunding_challenge_id', '=', False)]}"
                         />
-                    <field
+                        <field
                             name="crowdfunding_vendor_amount"
                             attrs="{'invisible': [('crowdfunding_challenge_id', '=', False)]}"
                         />
-                </group>
+                    </group>
                 </page>
             </notebook>
         </field>

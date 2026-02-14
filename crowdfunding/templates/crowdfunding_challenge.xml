@@ -8,9 +8,9 @@
                 <div id="challenge_list" class="container py-4">
                     <div class="card" t-foreach="results" t-as="result">
                         <div class="card-body">
-                            <a t-att-href="result.website_url"><t
-                                    t-esc="result.name"
-                                /></a>
+                            <a t-att-href="result.website_url">
+                                <t t-esc="result.name" />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -85,12 +85,12 @@
                         </div>
                         <div class="container">
                                 Amount pledged: <span
-                                t-field="object.pledged_amount"
-                            /> (<span t-esc="round(object.pledged_percentage)" />%)
+                            t-field="object.pledged_amount"
+                        /> (<span t-esc="round(object.pledged_percentage)" />%)
                         </div>
-                        <div class="container" t-if="object.description_url"><a
-                                t-att-href="object.description_url"
-                            >More information</a></div>
+                        <div class="container" t-if="object.description_url">
+                            <a t-att-href="object.description_url">More information</a>
+                        </div>
                         <div class="container" t-if="object.claimed_partner_id">
                             <t>
                                 <span t-if="object.state == 'claimed'">Claimed by</span>
