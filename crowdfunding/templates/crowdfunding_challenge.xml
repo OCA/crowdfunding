@@ -74,10 +74,6 @@
                 <div class="container">
                     <section class="mb24">
                         <div class="container">
-                            <img
-                                t-attf-src="/web/image/crowdfunding.challenge/{{object.id}}/description_image"
-                                t-if="object.description_image"
-                            />
                             <div t-field="object.description" />
                         </div>
                         <div class="container" t-if="object.target_amount">
