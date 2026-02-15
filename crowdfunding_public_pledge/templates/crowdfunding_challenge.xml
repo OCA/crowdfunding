@@ -14,14 +14,14 @@
             <section
                 name="crowdfunding_public_pledge"
                 t-if="public_pledge_invoices"
-                class="mb24"
+                class="mb24 crowdfunding-public-pledge"
             >
                 <h2>Pledges</h2>
                 <div class="container d-flex flex-wrap">
                     <div
                         t-foreach="public_pledge_invoices"
                         t-as="invoice"
-                        class="card col-12 col-md-6"
+                        class="card col-12 col-md-6 pledge"
                     >
                         <div class="card-body">
                             <div class="row mx-0">
@@ -32,16 +32,16 @@
                                 <img
                                     t-if="partner.image_128"
                                     t-att-src="image_data_uri(partner.image_128)"
-                                    class="mr-2"
+                                    class="col mr-2"
                                     width="128"
                                 />
                                 <img
                                     t-if="not partner.image_128"
                                     src="/base/static/img/company_image.png"
-                                    class="mr-2"
+                                    class="col mr-2"
                                     width="128"
                                 />
-                                <div>
+                                <div class="col">
                                     <div t-field="partner.name" />
                                     <div t-field="invoice.amount_total" />
                                 </div>
