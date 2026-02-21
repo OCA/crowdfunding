@@ -17,11 +17,13 @@
     "data": [
         "templates/crowdfunding_challenge.xml",
         "templates/payment.xml",
+        "templates/portal.xml",
         "views/account_move.xml",
     ],
     "assets": {
         "web.assets_frontend": [
             "/crowdfunding_public_pledge/static/src/scss/crowdfunding_public_pledge.scss",
+            "/crowdfunding_public_pledge/static/src/js/crowdfunding_public_pledge.esm.js",
         ],
     },
 }
