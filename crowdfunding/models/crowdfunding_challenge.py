@@ -44,7 +44,7 @@ class CrowdfundingChallenge(models.Model):
         "Submitted: Work is submitted, no further payments possible\n"
         "Done: Work is done, all payments done",
     )
-    description = fields.Html()
+    description = fields.Html(sanitize=False)
     description_url = fields.Char(
         "Description URL", help="URL for more information about this challenge"
     )

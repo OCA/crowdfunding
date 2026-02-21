@@ -108,6 +108,5 @@ class Payment(PaymentPortal):
             kwargs["currency_id"] = challenge.currency_id.id
             kwargs["invoice_id"] = invoice.id
             kwargs["partner_id"] = partner.id
-            kwargs["reference"] = f"crowdfunding/{challenge.id}/{partner.id}"
             result = self.payment_pay(**kwargs)
         return result

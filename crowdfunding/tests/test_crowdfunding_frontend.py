@@ -10,7 +10,7 @@ class TestCrowdfundingFrontend(odoo.tests.HttpCase):
         """
         challenge = self.env.ref("crowdfunding.demo_challenge")
         self.start_tour("/", "crowdfunding_frontend_us")
-        self.assertEqual(challenge.pledged_amount, 4242)
+        self.assertEqual(challenge.pledged_amount_total, 4242)
         self.assertEqual(
             challenge.invoice_ids.partner_id.name,
             "Firstname Lastname",
