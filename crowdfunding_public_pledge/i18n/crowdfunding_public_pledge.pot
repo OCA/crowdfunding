@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,20 +14,18 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: crowdfunding_public_pledge
+#: model_terms:ir.ui.view,arch_db:crowdfunding_public_pledge.pledge_detail
+msgid "Add your pledge today!"
+msgstr ""
+
+#. module: crowdfunding_public_pledge
+#: model_terms:ir.ui.view,arch_db:crowdfunding_public_pledge.pledge_detail
+msgid "Challenge Cover"
+msgstr ""
+
+#. module: crowdfunding_public_pledge
 #: model:ir.model,name:crowdfunding_public_pledge.model_crowdfunding_challenge
 msgid "Crowdfunding challenge"
-msgstr ""
-
-#. module: crowdfunding_public_pledge
-#: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_account_move__display_name
-#: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_crowdfunding_challenge__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: crowdfunding_public_pledge
-#: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_account_move__id
-#: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_crowdfunding_challenge__id
-msgid "ID"
 msgstr ""
 
 #. module: crowdfunding_public_pledge
@@ -36,9 +34,8 @@ msgid "Journal Entry"
 msgstr ""
 
 #. module: crowdfunding_public_pledge
-#: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_account_move____last_update
-#: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_crowdfunding_challenge____last_update
-msgid "Last Modified on"
+#: model_terms:ir.ui.view,arch_db:crowdfunding_public_pledge.portal_invoice_page
+msgid "My pledge"
 msgstr ""
 
 #. module: crowdfunding_public_pledge
@@ -48,12 +45,22 @@ msgstr ""
 
 #. module: crowdfunding_public_pledge
 #: model_terms:ir.ui.view,arch_db:crowdfunding_public_pledge.pay_details
+#: model_terms:ir.ui.view,arch_db:crowdfunding_public_pledge.portal_invoice_page
 msgid "Publish my pledge on the website"
 msgstr ""
 
 #. module: crowdfunding_public_pledge
 #: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_account_bank_statement_line__crowdfunding_public
 #: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_account_move__crowdfunding_public
-#: model:ir.model.fields,field_description:crowdfunding_public_pledge.field_account_payment__crowdfunding_public
 msgid "Show on website"
+msgstr ""
+
+#. module: crowdfunding_public_pledge
+#: model_terms:ir.ui.view,arch_db:crowdfunding_public_pledge.pledge_detail
+msgid "has contributed"
+msgstr ""
+
+#. module: crowdfunding_public_pledge
+#: model_terms:ir.ui.view,arch_db:crowdfunding_public_pledge.pledge_detail
+msgid "to"
 msgstr ""
