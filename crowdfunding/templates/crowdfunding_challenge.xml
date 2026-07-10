@@ -66,6 +66,17 @@
                     </div>
                 </t>
                 <div class="container">
+                    <nav
+                        aria-label="breadcrumb"
+                        class="breadcrumb flex-nowrap py-0 px-0 css_editable_mode_hidden"
+                    >
+                        <li class="breadcrumb-item">
+                            <a href="/crowdfunding">All challenges</a>
+                        </li>
+                        <li class="breadcrumb-item text-truncate active">
+                            <span t-out="object.name" />
+                        </li>
+                    </nav>
                     <section class="mb24 mt24">
                         <div class="container">
                             <div t-field="object.description" />
